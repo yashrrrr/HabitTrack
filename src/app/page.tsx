@@ -1,13 +1,14 @@
 "use client";
 
 import { useAuth } from "@/lib/firebase/AuthContext";
-import { auth } from "@/lib/firebase/client";
-import { signOut } from "firebase/auth";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { VirtualizedDateSlider } from "@/components/ui/virtualized-date-slider";
+import { useState } from "react";
 
 export default function Home() {
   const { user, loading } = useAuth();
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   // Show a loading message while the auth state is being determined
   if (loading) {
@@ -18,27 +19,38 @@ export default function Home() {
     );
   }
 
+  const handleDateSelect = (date: Date) => {
+    setSelectedDate(date);
+    console.log("Selected date:", date.toDateString());
+  };
+
   return (
-    <main className="  items-center justify-center p-5">
-      
-      {/* If user is logged in, show welcome message and sign out button */}
+    <>
+      {/* If user is logged in, show welcome message and date slider */}
       {user ? (
-        <>
-          Hi
-        </>
+        <div className="w-full overflow-hidden p-4">
+          {/* Horizontal Date Slider - Dark Theme like in image */}
+          <div className="bg-gray-100 rounded-2xl overflow-hidden">
+            <div className="py-6">
+              <VirtualizedDateSlider 
+                selectedDate={selectedDate}
+                onDateSelect={handleDateSelect}
+              />
+            </div>
+          </div>
+        </div>
       ) : (
         // If user is not logged in, show message and link to login page
-        <>
-          <h1 className="text-4xl font-bold mb-4">HabitTrack</h1>
+        <div className="flex items-center justify-center h-screen flex-col">
+          <h1 className="text-4xl text-center font-bold mb-4">HabitTrack</h1>
           <div className="text-center">
             <p className="mb-4">Please sign in to track your habits.</p>
             <Link href="/login">
               <Button>Go to Login</Button>
             </Link>
           </div>
-        </>
+        </div>
       )}
-    </main>
+    </>
   );
 }
-
