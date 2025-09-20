@@ -23,7 +23,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset>
+      <SidebarInset className="w-full overflow-hidden">
         <header className="sticky top-0 z-[3] flex h-16 shrink-0 items-center border-b px-2 bg-background">
           <SidebarTrigger className="h-8 w-8" />
           <div className="h-4 w-px bg-border mx-2" />
@@ -31,7 +31,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
           <div className="flex-grow" />
           <SignOutButton />
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4">
+        <div className="flex flex-1 flex-col overflow-hidden w-full">
           {children}
         </div>
       </SidebarInset>
