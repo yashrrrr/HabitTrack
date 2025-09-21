@@ -4,11 +4,27 @@ import { useAuth } from "@/lib/firebase/AuthContext";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { VirtualizedDateSlider } from "@/components/ui/virtualized-date-slider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import getUserData from "@/services/getUserData";
+import { responseUser } from "@/types/types";
 
 export default function Home() {
   const { user, loading } = useAuth();
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [categories, setCategories] = useState<string[]>([]);
+  const [data, setData] = useState<responseUser | null>(null);
+  
+  const fetchit = async () => {
+    if (!user) return;
+    const userData = await getUserData(user);
+    setData(userData);
+  };
+
+  useEffect(()=>{
+    if(data){
+      console.log(data?.categories);
+    }
+  },[data]);
 
   // Show a loading message while the auth state is being determined
   if (loading) {
@@ -37,6 +53,9 @@ export default function Home() {
                 onDateSelect={handleDateSelect}
               />
             </div>
+          </div>
+          <div>
+            <button onClick={fetchit}>Get it!</button>
           </div>
         </div>
       ) : (
