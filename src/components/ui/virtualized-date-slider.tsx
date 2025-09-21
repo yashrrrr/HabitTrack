@@ -65,7 +65,7 @@ export function VirtualizedDateSlider({
   useEffect(() => {
     if (scrollContainerRef.current && selectedIndex >= 0 && dates.length > 0) {
       const container = scrollContainerRef.current;
-      const itemWidth = 60; // 48px + 12px gap
+      const itemWidth = 72; // 48px + 12px gap
       const containerWidth = container.clientWidth;
       const targetScrollLeft = (selectedIndex * itemWidth) - (containerWidth / 2) + (itemWidth / 2);
       
@@ -101,7 +101,7 @@ export function VirtualizedDateSlider({
             onClick={() => handleDateClick(index)}
             className={cn(
               "flex-shrink-0 flex flex-col items-center justify-center",
-              "w-12 h-16 rounded-xl cursor-pointer transition-all duration-200",
+              "w-15 h-16 rounded-xl cursor-pointer transition-all duration-200",
               "hover:scale-105 select-none",
               selectedIndex === index 
                 ? "bg-red-500 text-white shadow-lg shadow-red-500/25" 
