@@ -7,6 +7,8 @@ import { VirtualizedDateSlider } from "@/components/ui/virtualized-date-slider";
 import { useEffect, useState } from "react";
 import getUserData from "@/services/getUserData";
 import { responseUser } from "@/types/types";
+import UserHabitTask from "@/components/userHabitTask";
+import AddHT from "@/components/addHT";
 
 export default function Home() {
   const { user, loading } = useAuth();
@@ -14,11 +16,13 @@ export default function Home() {
   const [categories, setCategories] = useState<string[]>([]);
   const [data, setData] = useState<responseUser | null>(null);
   
-  const fetchit = async () => {
-    if (!user) return;
-    const userData = await getUserData(user);
-    setData(userData);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      const dt = await getUserData(user);
+      setData(dt);
+    };
+    fetchData();
+  }, []);
 
   useEffect(()=>{
     if(data){
@@ -54,9 +58,11 @@ export default function Home() {
               />
             </div>
           </div>
-          <div>
-            <button onClick={fetchit}>Get it!</button>
-          </div>
+          <h2 className="mt-8 mb-4 ml-2 text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+            Habits and Tasks
+          </h2>
+          <UserHabitTask data={data}/>
+          <AddHT data={data}/>
         </div>
       ) : (
         // If user is not logged in, show message and link to login page

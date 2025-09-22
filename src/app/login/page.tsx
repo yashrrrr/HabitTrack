@@ -12,6 +12,9 @@ export default function LoginPage() {
 
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
+     provider.setCustomParameters({
+    prompt: 'select_account'
+  });
     try {
       await signInWithPopup(auth, provider);
       router.push("/"); // Redirect to homepage on successful login

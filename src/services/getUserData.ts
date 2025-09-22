@@ -8,9 +8,9 @@ import { responseUser } from '@/types/types';
  * @param user The authenticated user object from Firebase Auth.
  * @returns A promise that resolves with the user's data or null if not found.
  */
-export default async function getUserData(user: User): Promise<responseUser | null> {
+export default async function getUserData(user: User | null): Promise<responseUser | null> {
     if (!user) {
-        console.error("User must be provided to fetch data.");
+        console.log("User must be provided to fetch data.");
         return null;
     }
     try {
